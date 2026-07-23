@@ -1,4 +1,4 @@
-﻿import { ArrowRight, Briefcase, Clock, ExternalLink, GraduationCap } from 'lucide-react'
+import { ArrowRight, Briefcase, Clock, ExternalLink, GraduationCap } from 'lucide-react'
 import type { LucideIcon } from 'lucide-react'
 import { Link } from 'react-router-dom'
 import { useSiteSettings } from '../features/siteSettings/siteSettingsContext'

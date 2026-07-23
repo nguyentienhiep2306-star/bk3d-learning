@@ -1,4 +1,4 @@
-﻿import { ChevronDown, ChevronRight, Edit3, Loader2, Plus, Save, Trash2, X } from 'lucide-react'
+import { ChevronDown, ChevronRight, Edit3, Loader2, Plus, Save, Trash2, X } from 'lucide-react'
 import { useCallback, useEffect, useState, type FormEvent } from 'react'
 import { Alert, Button, Card, Input, PageHeader, Select, Textarea } from '../../components/ui'
 import { parseYouTubeVideoId } from '../../lib/youtube'

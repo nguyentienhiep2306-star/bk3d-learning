@@ -1,4 +1,4 @@
-﻿import { supabase } from '../lib/supabase'
+import { supabase } from '../lib/supabase'
 import { slugify } from '../lib/utils'
 import { isValidYouTubeVideoId } from '../lib/youtube'
 import type { Course, CourseTree, Lesson, LessonProgress } from '../types/database'
