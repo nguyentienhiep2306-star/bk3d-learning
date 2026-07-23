@@ -22,15 +22,15 @@ export function Button({
 }
 
 export function Input(props: InputHTMLAttributes<HTMLInputElement>) {
-  return <input {...props} className={cn('min-h-11 w-full rounded-lg border border-border bg-white px-3 text-sm outline-none focus:border-brand focus:ring-2 focus:ring-brand-soft#9fd5cc]', props.className)} />
+  return <input {...props} className={cn('min-h-11 w-full rounded-lg border border-border bg-white px-3 text-sm outline-none focus:border-brand focus:ring-2 focus:ring-brand-soft', props.className)} />
 }
 
 export function Textarea(props: TextareaHTMLAttributes<HTMLTextAreaElement>) {
-  return <textarea {...props} className={cn('min-h-28 w-full rounded-md border border-[#c7d3de] bg-white px-3 py-2 text-sm outline-none focus:border-brand focus:ring-2 focus:ring-[#9fd5cc]', props.className)} />
+  return <textarea {...props} className={cn('min-h-28 w-full rounded-lg border border-border bg-white px-3 py-2 text-sm outline-none focus:border-brand focus:ring-2 focus:ring-brand-soft', props.className)} />
 }
 
 export function Select(props: SelectHTMLAttributes<HTMLSelectElement>) {
-  return <select {...props} className={cn('min-h-11 w-full rounded-lg border border-border bg-white px-3 text-sm outline-none focus:border-brand focus:ring-2 focus:ring-brand-soft#9fd5cc]', props.className)} />
+  return <select {...props} className={cn('min-h-11 w-full rounded-lg border border-border bg-white px-3 text-sm outline-none focus:border-brand focus:ring-2 focus:ring-brand-soft', props.className)} />
 }
 
 export function Card({ children, className }: { children: ReactNode; className?: string }) {
@@ -71,4 +71,5 @@ export function ProgressBar({ value }: { value: number }) {
     </div>
   )
 }
+
 
