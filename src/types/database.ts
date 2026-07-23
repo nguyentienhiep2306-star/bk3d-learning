@@ -92,3 +92,20 @@ export type CourseTree = Course & {
 export type QuizWithQuestions = Quiz & {
   quiz_questions: Array<QuizQuestion & { quiz_answers: QuizAnswer[] }>
 }
+ export type SiteSettings = {
+   id: string
+   site_name: string
+   page_title: string
+   logo_url: string | null
+   favicon_url: string | null
+   homepage_content: HomepageContent
+   created_at: string
+   updated_at: string
+   updated_by: string | null
+ }
+ 
+ export type HomepageContent = {
+   eyebrow: string
+   title: string
+   subtitle: string
+ }

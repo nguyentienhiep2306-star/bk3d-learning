@@ -3,6 +3,7 @@ import { AppLayout } from '../layouts/AppLayout'
 import { AdminDashboard } from '../pages/admin/AdminDashboard'
 import { AdminCourses } from '../pages/admin/AdminCourses'
 import { AdminEnrollments } from '../pages/admin/AdminEnrollments'
+ import { AdminSettings } from '../pages/admin/AdminSettings'
 import { AdminUsers } from '../pages/admin/AdminUsers'
 import { CourseDetail } from '../pages/CourseDetail'
 import { Courses } from '../pages/Courses'
@@ -40,6 +41,7 @@ export function AppRoutes() {
           <Route path="admin/courses" element={<AdminCourses />} />
           <Route path="admin/users" element={<AdminUsers />} />
           <Route path="admin/enrollments" element={<AdminEnrollments />} />
+          <Route path="admin/settings" element={<AdminSettings />} />
         </Route>
         <Route path="*" element={<NotFound />} />
       </Route>

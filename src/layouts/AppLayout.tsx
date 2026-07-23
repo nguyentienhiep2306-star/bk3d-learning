@@ -1,6 +1,7 @@
 import { BookOpen, GraduationCap, LogOut, Menu, Shield, UserRound, X, type LucideIcon } from 'lucide-react'
 import { useState } from 'react'
 import { Link, NavLink, Outlet } from 'react-router-dom'
+ import { useSiteSettings } from '../features/siteSettings/siteSettingsContext'
 import { Button } from '../components/ui'
 import { useAuth } from '../features/auth/authContext'
 import { cn } from '../lib/utils'
@@ -14,6 +15,7 @@ const navItems: Array<{ to: string; label: string; icon: LucideIcon }> = [
 export function AppLayout() {
   const [open, setOpen] = useState(false)
   const { user, isAdmin, signOut } = useAuth()
+  const { siteName, logoUrl } = useSiteSettings()
   const items = isAdmin ? [...navItems, { to: '/admin', label: 'Quản trị', icon: Shield }] : navItems
 
   return (
@@ -21,8 +23,14 @@ export function AppLayout() {
       <header className="sticky top-0 z-30 border-b border-[#d9e2ea] bg-white/95 backdrop-blur">
         <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6">
           <Link to="/" className="flex items-center gap-2 font-bold text-[#172033]">
-            <span className="grid h-9 w-9 place-items-center rounded-md bg-[#0f6f64] text-white">BK</span>
-            <span>BK3D Learning</span>
+             {logoUrl ? (
+               <img src={logoUrl} alt={siteName} className="h-9 w-auto max-w-[180px] object-contain" />
+             ) : (
+               <>
+                 <span className="grid h-9 w-9 shrink-0 place-items-center rounded-md bg-[#0f6f64] text-white">BK</span>
+                 <span className="truncate">{siteName}</span>
+               </>
+             )}
           </Link>
           <nav className="hidden items-center gap-1 md:flex">{items.map((item) => <NavItem key={item.to} {...item} />)}</nav>
           <div className="hidden items-center gap-2 md:flex">

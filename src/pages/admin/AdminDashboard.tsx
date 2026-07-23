@@ -1,4 +1,4 @@
-import { BookOpen, GraduationCap, Users } from 'lucide-react'
+ import { BookOpen, GraduationCap, Settings, Users } from 'lucide-react'
 import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { Button, Card, PageHeader } from '../../components/ui'
@@ -22,7 +22,8 @@ export function AdminDashboard() {
       <div className="mt-6 grid gap-4 md:grid-cols-3">
         <Link to="/admin/courses"><Button className="w-full" variant="secondary">Khóa học</Button></Link>
         <Link to="/admin/users"><Button className="w-full" variant="secondary">Học viên</Button></Link>
-        <Link to="/admin/enrollments"><Button className="w-full" variant="secondary">Cấp quyền</Button></Link>
+       <Link to="/admin/enrollments"><Button className="w-full" variant="secondary">Cấp quyền</Button></Link>
+       <Link to="/admin/settings"><Button className="w-full" variant="secondary"><Settings size={16} /> Cài đặt</Button></Link>
       </div>
     </div>
   )
