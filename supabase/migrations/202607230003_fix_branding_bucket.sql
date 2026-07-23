@@ -29,12 +29,12 @@ on conflict (id) do update set
 
 -- 2. Drop existing policies so we can recreate them cleanly
 --    (PostgreSQL does not support CREATE POLICY IF NOT EXISTS)
-do  begin
+do $$ begin
   drop policy if exists "branding public read"  on storage.objects;
   drop policy if exists "branding admin insert" on storage.objects;
   drop policy if exists "branding admin update" on storage.objects;
   drop policy if exists "branding admin delete" on storage.objects;
-end ;
+end $$;
 
 -- 3. Public read – anonymous and authenticated users can view assets
 create policy "branding public read"
