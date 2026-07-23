@@ -11,14 +11,13 @@
    refresh: () => Promise<void>
  }
  
- export const DEFAULT_SITE_NAME = 'BK3D Learning'
- export const DEFAULT_PAGE_TITLE = 'BK3D Learning - Nền tảng đào tạo kỹ thuật'
- export const DEFAULT_HOMEPAGE: HomepageContent = {
-   eyebrow: 'Nền tảng đào tạo kỹ thuật',
-   title: 'BK3D giúp học viên học đúng khóa, đúng tiến độ, đúng năng lực.',
-   subtitle:
-     'Quản lý khóa học, bài giảng YouTube Unlisted, tiến độ học và bài kiểm tra trên một hệ thống React + Supabase sẵn sàng triển khai tại bk3d.io.vn.',
- }
+export const DEFAULT_SITE_NAME = 'BK3D Learning'
+export const DEFAULT_PAGE_TITLE = 'BK3D Learning - Đào tạo thiết kế cơ khí và SolidWorks thực chiến'
+export const DEFAULT_HOMEPAGE: HomepageContent = {
+  eyebrow: 'Đào tạo kỹ thuật và thiết kế cơ khí thực chiến',
+  title: 'Làm chủ SolidWorks – Tự tin hoàn thiện đồ án và sẵn sàng cho công việc thực tế',
+  subtitle: 'Lộ trình học chuyên sâu dành cho sinh viên và kỹ sư cơ khí. Học theo dự án, mô phỏng đúng quy trình doanh nghiệp và theo dõi tiến độ ngay trên BK3D Learning.',
+}
  
  export const SiteSettingsContext = createContext<SiteSettingsValue | null>(null)
  

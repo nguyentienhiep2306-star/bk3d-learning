@@ -1,186 +1,196 @@
-import { ArrowRight, Briefcase, Clock, ExternalLink, GraduationCap } from 'lucide-react'
-import type { LucideIcon } from 'lucide-react'
+﻿import { ArrowRight, BookOpen, Clock, Cpu, GraduationCap, Monitor, PenTool, Trophy } from 'lucide-react'
 import { Link } from 'react-router-dom'
 import { useSiteSettings } from '../features/siteSettings/siteSettingsContext'
 import { DEFAULT_HOMEPAGE } from '../features/siteSettings/siteSettingsContext'
 import { Button, Card } from '../components/ui'
 
-type BenefitItem = {
-  icon: LucideIcon
-  title: string
-  description: string
-}
-
-type ModuleItem = {
-  title: string
-  description: string
-  gradient: string
-  icon: string
-}
-
-type ProjectItem = {
-  title: string
-  description: string
-  gradient: string
-}
-
-const benefits: BenefitItem[] = [
+const values = [
   {
     icon: GraduationCap,
-    title: 'Bam Sat Do An Tot Nghiep',
-    description: 'Ho tro len y tuong, tinh toan thiet ke chi tiet may, he thong truyen dong va xuat ban ve lap rap chuan hoc thuat.',
+    title: 'Bám sát đồ án tốt nghiệp',
+    desc: 'Hỗ trợ lên ý tưởng, tính toán thiết kế chi tiết máy, hệ thống truyền động và xuất bản vẽ lắp ráp chuẩn học thuật.',
   },
   {
-    icon: Briefcase,
-    title: 'Ky Nang Chuan Doanh Nghiep',
-    description: 'Nam vung dung sai, yeu cau gia cong thuc te va quy trinh thiet ke ung dung truc tiep tai cac cong ty tu dong hoa.',
+    icon: Trophy,
+    title: 'Kỹ năng chuẩn doanh nghiệp',
+    desc: 'Nắm vững dung sai, yêu cầu gia công thực tế và quy trình thiết kế ứng dụng trực tiếp tại các công ty tự động hóa.',
   },
   {
     icon: Clock,
-    title: 'Hoc Thuc Chien, Toi Uu',
-    description: 'He thong bai giang truc quan, mo phong du an that. Theo doi tien do de bu dap lo hong kien thuc nhanh chong.',
+    title: 'Học thực chiến, dễ áp dụng',
+    desc: 'Hệ thống bài giảng trực quan, mô phỏng dự án thật. Theo dõi tiến độ để bù đắp lỗ hổng kiến thức nhanh chóng.',
   },
 ]
 
-const trainingModules: ModuleItem[] = [
+const modules = [
   {
-    title: 'Thiet ke ket cau & Weldments',
-    description: 'Ung dung ve khung gia do, he thong ga han, boc tach vat tu thep hinh.',
-    gradient: 'from-[#0f6f64] to-[#0b5c53]',
-    icon: '🔧',
+    icon: PenTool,
+    title: 'Thiết kế kết cấu và Weldments',
+    desc: 'Ứng dụng vẽ khung giá đỡ, hệ thống gá hàn, bóc tách vật tư thép hình.',
   },
   {
-    title: 'Mo phong dong hoc Robot',
-    description: 'Tinh toan khong gian lam viec va quy dao canh tay robot SCARA, he thong tay don.',
-    gradient: 'from-[#1a4a7a] to-[#0d3559]',
-    icon: '🤖',
+    icon: Cpu,
+    title: 'Mô phỏng động học robot',
+    desc: 'Tính toán không gian làm việc và quỹ đạo cánh tay robot SCARA, hệ thống tay đòn.',
   },
   {
-    title: 'Thiet ke chi tiet may & Truyen dong',
-    description: 'Lua chon o bi, tinh toan khe ho an khop banh rang, truc vit, thanh rang.',
-    gradient: 'from-[#7a4a1a] to-[#59350d]',
-    icon: '⚙️',
+    icon: Monitor,
+    title: 'Thiết kế chi tiết máy và truyền động',
+    desc: 'Lựa chọn ổ bi, tính toán khe hở ăn khớp bánh răng, trục vít, thanh răng.',
   },
 ]
 
-const projects: ProjectItem[] = [
-  { title: 'May cap day han tu dong', description: 'He thong cap day han FH-2000 cho day chuyen san xuat', gradient: 'from-slate-800 to-slate-600' },
-  { title: 'Cum nang ha thuy luc', description: 'He thong nang ha 5 tan su dung xi lanh thuy luc', gradient: 'from-slate-700 to-slate-500' },
-  { title: 'Bang tai phan loai san pham', description: 'He thong bang tai phan loai theo kich thuoc & trong luong', gradient: 'from-slate-900 to-slate-700' },
-  { title: 'Gia cong chi tiet banh rang', description: 'Bo truyen banh rang tru rang thang cap chinh xac 6', gradient: 'from-slate-800 to-slate-500' },
+const projects = [
+  { name: 'Máy cấp dây hàn tự động', skill: 'Weldments & Kết cấu', desc: 'Hệ thống cấp dây hàn FH-2000 cho dây chuyền sản xuất' },
+  { name: 'Cụm nâng hạ thủy lực', skill: 'Chi tiết máy & Truyền động', desc: 'Hệ thống nâng hạ 5 tấn sử dụng xi lanh thủy lực' },
+  { name: 'Băng tải phân loại sản phẩm', skill: 'Kết cấu & Tự động hóa', desc: 'Băng tải phân loại theo kích thước và trọng lượng' },
+  { name: 'Gia công bánh răng trụ răng thẳng', skill: 'Chi tiết máy', desc: 'Bộ truyền bánh răng trụ răng thẳng cấp chính xác 6' },
 ]
 
 export function Home() {
   const { homepageContent } = useSiteSettings()
-  const content = homepageContent ?? DEFAULT_HOMEPAGE
+  const hc = homepageContent ?? DEFAULT_HOMEPAGE
+
+  const eyebrow = hc.eyebrow || '{eyebrow}'
+  const heroTitle = hc.title || '{heroTitle}'
+  const heroSubtitle = hc.subtitle || '{heroSubtitle}'
 
   return (
-    <div className="space-y-16 pb-16">
-      {/* === HERO SECTION === */}
-      <section className="grid items-center gap-8 pt-8 lg:grid-cols-[1.05fr_0.95fr]">
-        <div>
-          {content.eyebrow ? (
-            <p className="mb-3 text-sm font-bold uppercase tracking-wide text-[#0f6f64]">{content.eyebrow}</p>
-          ) : null}
-          <h1 className="max-w-3xl text-4xl font-bold leading-tight text-[#172033] sm:text-5xl">{content.title}</h1>
-          <p className="mt-5 max-w-2xl text-lg text-[#4d6378]">{content.subtitle}</p>
-          <div className="mt-7 flex flex-col gap-3 sm:flex-row">
-            <Link to="/courses">
-              <Button>
-                <ArrowRight size={18} /> Kham pha lo trinh hoc
-              </Button>
-            </Link>
-            <a
-              href="#"
-              className="inline-flex min-h-11 items-center justify-center gap-2 rounded-md border border-[#0f6f64] px-4 py-2 text-sm font-semibold text-[#0f6f64] transition hover:bg-[#e0f2ef]"
-            >
-              Tu van do an
-            </a>
+    <div>
+      {/* ===== HERO ===== */}
+      <section className="relative overflow-hidden py-12 lg:py-16">
+        <div className="bg-grid-pattern pointer-events-none absolute inset-0" />
+        <div className="relative grid items-center gap-10 lg:grid-cols-[1.1fr_0.9fr]">
+          <div>
+            <p className="mb-4 text-sm font-bold uppercase tracking-[0.08em] text-brand">
+              {eyebrow}
+            </p>
+            <h1 className="text-[32px] font-bold leading-[1.15] text-[#111827] sm:text-[38px] lg:text-[48px]">
+              {heroTitle}
+            </h1>
+            <p className="mt-5 max-w-2xl text-[16px] leading-relaxed text-[#475569]">
+              {heroSubtitle}
+            </p>
+            <div className="mt-8 flex flex-col gap-3 sm:flex-row">
+              <Link to="/courses">
+                <Button className="min-h-[48px] px-6 text-[15px]">
+                  Khám phá lộ trình học <ArrowRight size={18} />
+                </Button>
+              </Link>
+              <Link to="/courses">
+                <Button variant="secondary" className="min-h-[48px] px-6 text-[15px]">
+                  Xem các khóa học
+                </Button>
+              </Link>
+            </div>
           </div>
-        </div>
-        <div className="rounded-lg border border-[#d9e2ea] bg-gradient-to-br from-[#0f6f64] to-[#0b5c53] p-6 shadow-sm">
-          <div className="aspect-video rounded-md bg-[#172033]/30 p-5 text-white backdrop-blur">
-            <div className="flex h-full flex-col justify-between">
-              <GraduationCap size={40} />
-              <div>
-                <p className="text-sm text-[#b8d9d4]">BK3D Academy</p>
-                <h2 className="mt-2 text-2xl font-bold">Thiet ke & Che tao</h2>
+
+          {/* Hero image card */}
+          <div className="relative">
+            <div className="overflow-hidden rounded-2xl border border-border bg-surface shadow-sm">
+              <div className="aspect-[4/3] bg-gradient-to-br from-technical to-slate-700">
+                <img
+                  src="/hero.png"
+                  alt="Học viên đang thao tác trên phần mềm SolidWorks"
+                  className="h-full w-full object-cover object-[center_30%]"
+                  onError={(e) => {
+                    const t = e.currentTarget
+                    t.style.display = 'none'
+                    t.parentElement!.classList.add('flex', 'items-center', 'justify-center')
+                    const placeholder = document.createElement('div')
+                    placeholder.className = 'text-center p-6'
+                    placeholder.innerHTML = '<div class="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-2xl bg-white/10"><svg class="h-8 w-8 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="4" y="4" width="16" height="16" rx="2"/><path d="M9 8h6M9 12h6M9 16h4"/></svg></div><p class="text-lg font-semibold text-white">Thiết kế trên SolidWorks</p><p class="mt-1 text-sm text-white/70">Học theo dự án thực tế</p>'
+                    t.parentElement!.appendChild(placeholder)
+                  }}
+                />
+              </div>
+              <div className="border-t border-border bg-surface px-5 py-4">
+                <div className="flex flex-wrap gap-x-5 gap-y-2 text-sm text-[#475569]">
+                  <span className="flex items-center gap-1.5">
+                    <BookOpen size={15} className="text-brand" /> Học trực tuyến trên website
+                  </span>
+                  <span className="flex items-center gap-1.5">
+                    <Clock size={15} className="text-brand" /> Chủ động thời gian
+                  </span>
+                  <span className="flex items-center gap-1.5">
+                    <GraduationCap size={15} className="text-brand" /> Theo dõi tiến độ
+                  </span>
+                  <span className="flex items-center gap-1.5">
+                    <PenTool size={15} className="text-brand" /> Thực hành theo đồ án
+                  </span>
+                </div>
               </div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* === 3 GIA TRI COT LOI === */}
-      <section>
-        <h2 className="mb-8 text-center text-2xl font-bold text-[#172033] sm:text-3xl">
-          Gia Tri Cot Loi
-        </h2>
+      {/* ===== GIÁ TRỊ CỐT LÕI ===== */}
+      <section className="py-16 lg:py-20">
+        <div className="mb-10 text-center">
+          <h2 className="text-[28px] font-bold text-[#111827] sm:text-[32px]">Giá trị cốt lõi</h2>
+          <p className="mt-2 text-[16px] text-[#475569]">Nền tảng được xây dựng để giúp bạn đạt kết quả tốt nhất</p>
+        </div>
         <div className="grid gap-6 md:grid-cols-3">
-          {benefits.map((item) => {
-            const Icon = item.icon
+          {values.map((v) => {
+            const Icon = v.icon
             return (
-              <Card key={item.title}>
-                <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-lg bg-[#e0f2ef]">
-                  <Icon className="text-[#0f6f64]" size={28} />
+              <Card key={v.title} className="group transition hover:-translate-y-[2px] hover:border-brand-border motion-reduce:transition-none motion-reduce:hover:translate-y-0">
+                <div className="mb-4 flex h-10 w-10 items-center justify-center rounded-xl border border-border bg-surface">
+                  <Icon size={20} className="text-brand" strokeWidth={1.75} />
                 </div>
-                <h3 className="text-lg font-bold text-[#172033]">{item.title}</h3>
-                <p className="mt-2 text-sm leading-relaxed text-[#4d6378]">{item.description}</p>
+                <h3 className="text-[17px] font-bold text-[#111827]">{v.title}</h3>
+                <p className="mt-2 text-[15px] leading-relaxed text-[#475569]">{v.desc}</p>
               </Card>
             )
           })}
         </div>
       </section>
 
-      {/* === CAC MODULE DAO TAO NOI BAT === */}
-      <section>
-        <div className="mb-8 text-center">
-          <h2 className="text-2xl font-bold text-[#172033] sm:text-3xl">Cac Module Dao Tao Noi Bat</h2>
-          <p className="mt-2 text-[#4d6378]">Chuong trinh dao tao thuc chien, ap dung ngay vao cong viec</p>
+      {/* ===== MÔ-ĐUN ĐÀO TẠO ===== */}
+      <section className="py-16 lg:py-20">
+        <div className="mb-10 text-center">
+          <h2 className="text-[28px] font-bold text-[#111827] sm:text-[32px]">Các mô-đun đào tạo nổi bật</h2>
+          <p className="mt-2 text-[16px] text-[#475569]">Chương trình đào tạo thực chiến, áp dụng ngay vào công việc</p>
         </div>
         <div className="grid gap-6 md:grid-cols-3">
-          {trainingModules.map((mod) => (
-            <div
-              key={mod.title}
-              className="group relative overflow-hidden rounded-lg border border-[#d9e2ea] bg-white shadow-sm transition hover:shadow-md"
-            >
-              <div className={"bg-gradient-to-br " + mod.gradient + " p-6 text-white"}>
-                <span className="text-3xl">{mod.icon}</span>
-              </div>
-              <div className="p-5">
-                <h3 className="text-lg font-bold text-[#172033]">{mod.title}</h3>
-                <p className="mt-2 text-sm leading-relaxed text-[#4d6378]">{mod.description}</p>
+          {modules.map((m) => {
+            const Icon = m.icon
+            return (
+              <Card key={m.title} className="group flex flex-col transition hover:-translate-y-[2px] hover:border-brand-border motion-reduce:transition-none motion-reduce:hover:translate-y-0">
+                <div className="mb-4 flex h-10 w-10 items-center justify-center rounded-xl border border-border bg-surface">
+                  <Icon size={20} className="text-brand" strokeWidth={1.75} />
+                </div>
+                <h3 className="text-[17px] font-bold text-[#111827]">{m.title}</h3>
+                <p className="mt-2 flex-1 text-[15px] leading-relaxed text-[#475569]">{m.desc}</p>
                 <Link
                   to="/courses"
-                  className="mt-4 inline-flex items-center gap-1 text-sm font-semibold text-[#0f6f64] hover:underline"
+                  className="mt-4 inline-flex items-center gap-1.5 text-[14px] font-semibold text-brand hover:underline"
                 >
-                  Tim hieu them <ArrowRight size={14} />
+                  Tìm hiểu thêm <ArrowRight size={15} />
                 </Link>
-              </div>
-            </div>
-          ))}
+              </Card>
+            )
+          })}
         </div>
       </section>
 
-      {/* === DU AN THUC TE === */}
-      <section>
-        <div className="mb-8 text-center">
-          <h2 className="text-2xl font-bold text-[#172033] sm:text-3xl">Du An Thuc Te</h2>
-          <p className="mt-2 text-[#4d6378]">San pham tu cac khoa hoc va du an tot nghiep cua hoc vien</p>
+      {/* ===== DỰ ÁN THỰC TẾ ===== */}
+      <section className="py-16 lg:py-20">
+        <div className="mb-10 text-center">
+          <h2 className="text-[28px] font-bold text-[#111827] sm:text-[32px]">Dự án thực tế</h2>
+          <p className="mt-2 text-[16px] text-[#475569]">Sản phẩm từ các khóa học và đồ án tốt nghiệp của học viên</p>
         </div>
-        <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
           {projects.map((p) => (
-            <div
-              key={p.title}
-              className="group relative cursor-pointer overflow-hidden rounded-lg border border-[#d9e2ea] bg-white shadow-sm"
-            >
-              <div className={"flex aspect-[4/3] items-end bg-gradient-to-br " + p.gradient + " p-5 transition duration-300 group-hover:scale-105"}>
-                <div className="translate-y-2 opacity-0 transition duration-300 group-hover:translate-y-0 group-hover:opacity-100">
-                  <h3 className="text-lg font-bold text-white">{p.title}</h3>
-                  <p className="mt-1 text-sm text-white/80">{p.description}</p>
-                  <span className="mt-2 inline-flex items-center gap-1 text-xs font-semibold text-white/90">
-                    <ExternalLink size={12} /> Xem chi tiet
+            <div key={p.name} className="group overflow-hidden rounded-xl border border-border bg-surface shadow-sm transition hover:shadow-md">
+              <div className="flex aspect-[4/3] items-end bg-gradient-to-br from-technical to-slate-600 p-5">
+                <div>
+                  <span className="inline-block rounded-md bg-white/10 px-2.5 py-1 text-[11px] font-semibold uppercase tracking-wide text-white/90">
+                    {p.skill}
                   </span>
+                  <h3 className="mt-2 text-[16px] font-bold text-white">{p.name}</h3>
+                  <p className="mt-1 text-[13px] text-white/75">{p.desc}</p>
                 </div>
               </div>
             </div>
@@ -190,3 +200,5 @@ export function Home() {
     </div>
   )
 }
+
+
