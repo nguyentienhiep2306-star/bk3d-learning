@@ -110,7 +110,7 @@ export async function updateSiteSettings(
  */
 export async function uploadBrandingAsset(
   file: File,
-  folder: 'logo' | 'favicon',
+   folder: 'logo' | 'favicon' | 'hero',
 ): Promise<string> {
   // Check session before upload
   const { data: sessionData } = await supabase.auth.getSession()

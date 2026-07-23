@@ -104,8 +104,11 @@ export type QuizWithQuestions = Quiz & {
    updated_by: string | null
  }
  
- export type HomepageContent = {
-   eyebrow: string
-   title: string
-   subtitle: string
- }
+export type HomepageContent = {
+  eyebrow: string
+  title: string
+  subtitle: string
+  hero_image_url?: string | null
+  hero_image_alt?: string
+  hero_image_position?: string
+}
