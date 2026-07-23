@@ -99,11 +99,11 @@ export function AdminSettings() {
   ): string | null {
     if (!allowedTypes.includes(file.type) && file.type !== 'image/x-icon') {
       const types = ['PNG', 'JPEG', 'WebP', ...(allowedTypes.includes('image/x-icon') ? ['ICO'] : [])]
-       return `${label} phải là file ảnh (${types.join(', ')}).`
+      return `${label} phải là file ảnh (${types.join(', ')}).`
     }
     if (file.size > maxSize) {
       const mb = Math.round(maxSize / (1024 * 1024))
-       return `${label} không được vượt quá ${mb} MB.`
+      return `${label} không được vượt quá ${mb} MB.`
     }
     return null
   }
@@ -131,21 +131,32 @@ export function AdminSettings() {
     setSaving(true)
     setNotification(null)
 
+    const uploadedFiles: string[] = []
     let newLogoUrl = existingLogoUrl
     let newFaviconUrl = existingFaviconUrl
     let oldLogoPath: string | null = null
     let oldFaviconPath: string | null = null
 
     try {
+      // Step 1: Validate text fields (basic)
+      if (!form.site_name.trim()) {
+        throw new Error('Tên thương hiệu không được để trống.')
+      }
+
+      // Step 2: Upload all new images BEFORE touching the database
       if (logoFile) {
         newLogoUrl = await uploadBrandingAsset(logoFile, 'logo')
+        uploadedFiles.push(getStoragePathFromUrl(newLogoUrl) ?? '')
         oldLogoPath = existingLogoUrl ? getStoragePathFromUrl(existingLogoUrl) : null
       }
+
       if (faviconFile) {
         newFaviconUrl = await uploadBrandingAsset(faviconFile, 'favicon')
+        uploadedFiles.push(getStoragePathFromUrl(newFaviconUrl) ?? '')
         oldFaviconPath = existingFaviconUrl ? getStoragePathFromUrl(existingFaviconUrl) : null
       }
 
+      // Step 3: Build payload and update database (single call)
       const homepageContent: HomepageContent = {
         eyebrow: form.homepage_eyebrow,
         title: form.homepage_title,
@@ -162,9 +173,11 @@ export function AdminSettings() {
 
       await updateSiteSettings(updates)
 
+      // Step 4: DB update succeeded — now clean up old files
       if (oldLogoPath) void deleteBrandingAsset(oldLogoPath)
       if (oldFaviconPath) void deleteBrandingAsset(oldFaviconPath)
 
+      // Step 5: Refresh local state
       setExistingLogoUrl(newLogoUrl)
       setExistingFaviconUrl(newFaviconUrl)
       setLogoFile(null)
@@ -182,6 +195,11 @@ export function AdminSettings() {
       await refresh()
       setNotification({ message: 'Đã lưu cài đặt thành công.', tone: 'success' })
     } catch (err) {
+      // Step 6: Rollback — delete any files we just uploaded since DB update didn't complete
+      for (const p of uploadedFiles) {
+        void deleteBrandingAsset(p)
+      }
+
       const message = err instanceof Error ? err.message : 'Không thể lưu cài đặt. Vui lòng thử lại.'
       setNotification({ message, tone: 'error' })
     } finally {
