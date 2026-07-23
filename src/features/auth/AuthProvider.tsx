@@ -1,4 +1,4 @@
-import type { Session } from '@supabase/supabase-js'
+﻿import type { Session } from '@supabase/supabase-js'
 import { useCallback, useEffect, useMemo, useState, type ReactNode } from 'react'
 import { supabase } from '../../lib/supabase'
 import type { Profile } from '../../types/database'
@@ -12,7 +12,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   async function loadProfile(userId: string) {
     const { data, error } = await supabase.from('profiles').select('*').eq('id', userId).maybeSingle()
     if (error) {
-      console.error('Không tải được hồ sơ')
+      console.error('Khong tai duoc ho so')
       setProfile(null)
       return
     }
@@ -34,12 +34,12 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
     const { data: listener } = supabase.auth.onAuthStateChange((_event, nextSession) => {
       setSession(nextSession)
-      if (nextSession?.user.id) {
-         loadProfile(nextSession.user.id).then(() => setLoading(false))
-       } else {
-         setProfile(null)
-         setLoading(false)
-       }
+      if (nextSession?.user.id) void loadProfile(nextSession.user.id)
+      else setProfile(null)
+      // getSession() already handles loading state for INITIAL_SESSION
+      if (_event !== 'INITIAL_SESSION') {
+        setLoading(false)
+      }
     })
 
     return () => {
