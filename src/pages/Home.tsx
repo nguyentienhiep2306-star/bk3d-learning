@@ -51,21 +51,21 @@ export function Home() {
   const { homepageContent } = useSiteSettings()
   const hc = homepageContent ?? DEFAULT_HOMEPAGE
 
-  const eyebrow = hc.eyebrow || '{eyebrow}'
-  const heroTitle = hc.title || '{heroTitle}'
-  const heroSubtitle = hc.subtitle || '{heroSubtitle}'
+  const eyebrow = hc.eyebrow || ''
+  const heroTitle = hc.title || 'Làm chủ SolidWorks – Tự tin hoàn thiện đồ án và sẵn sàng cho công việc thực tế'
+  const heroSubtitle = hc.subtitle || 'Lộ trình học chuyên sâu dành cho sinh viên và kỹ sư cơ khí. Học theo dự án, mô phỏng đúng quy trình doanh nghiệp và theo dõi tiến độ ngay trên BK3D Learning.'
 
   return (
     <div>
       {/* ===== HERO ===== */}
-      <section className="relative overflow-hidden py-12 lg:py-16">
+      <section className="relative overflow-hidden py-16 lg:py-20">
         <div className="bg-grid-pattern pointer-events-none absolute inset-0" />
-        <div className="relative grid items-center gap-10 lg:grid-cols-[1.1fr_0.9fr]">
+        <div className="relative grid items-center gap-10 lg:grid-cols-[1.05fr_0.95fr]">
           <div>
             <p className="mb-4 text-sm font-bold uppercase tracking-[0.08em] text-brand">
               {eyebrow}
             </p>
-            <h1 className="text-[32px] font-bold leading-[1.15] text-[#111827] sm:text-[38px] lg:text-[48px]">
+            <h1 className="text-[clamp(1.75rem,3.5vw,2.75rem)] font-bold leading-[1.15] tracking-[-0.01em] text-[#111827]">
               {heroTitle}
             </h1>
             <p className="mt-5 max-w-2xl text-[16px] leading-relaxed text-[#475569]">
@@ -200,5 +200,6 @@ export function Home() {
     </div>
   )
 }
+
 
 
