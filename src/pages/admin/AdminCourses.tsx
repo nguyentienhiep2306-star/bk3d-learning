@@ -1,4 +1,4 @@
-import { ChevronDown, ChevronRight, Edit3, Loader2, Plus, Save, Trash2, X } from 'lucide-react'
+﻿import { ChevronDown, ChevronRight, Edit3, Loader2, Plus, Save, Trash2, X } from 'lucide-react'
 import { useCallback, useEffect, useState, type FormEvent } from 'react'
 import { Alert, Button, Card, Input, PageHeader, Select, Textarea } from '../../components/ui'
 import { parseYouTubeVideoId } from '../../lib/youtube'
@@ -177,9 +177,9 @@ export function AdminCourses() {
       setNewSectionTitle('')
       const tree = await getCourseTree(selectedCourseId)
       setCourseTree(tree)
-      setMessage({ message: 'Da them chuong.', tone: 'success' })
+      setMessage({ message: 'Da Them muc.', tone: 'success' })
     } catch (err) {
-      setMessage({ message: err instanceof Error ? err.message : 'Khong the them chuong.', tone: 'error' })
+      setMessage({ message: err instanceof Error ? err.message : 'Khong the Them muc.', tone: 'error' })
     } finally {
       setAddingSection(false)
     }
@@ -200,7 +200,7 @@ export function AdminCourses() {
         const tree = await getCourseTree(selectedCourseId)
         setCourseTree(tree)
       }
-      setMessage({ message: 'Da cap nhat chuong.', tone: 'success' })
+      setMessage({ message: 'Da cap nhat muc.', tone: 'success' })
     } catch (err) {
       setMessage({ message: err instanceof Error ? err.message : 'Khong the cap nhat chuong.', tone: 'error' })
     }
@@ -212,6 +212,21 @@ export function AdminCourses() {
   }
 
   async function handleDeleteSection(sectionId: string) {
+    // Clean up any stale editing state for this section
+    if (editingSectionId === sectionId) {
+      setEditingSectionId(null)
+      setEditingSectionTitle('')
+    }
+    setExpandedSections(prev => {
+      const next = new Set(prev)
+      next.delete(sectionId)
+      return next
+    })
+    if (confirmDeleteLesson && editingLessonId) {
+      setEditingLessonId(null)
+      setEditingLessonTitle('')
+      setEditingLessonYoutube('')
+    }
     try {
       await deleteSection(sectionId)
       setConfirmDeleteSection(null)
@@ -219,9 +234,9 @@ export function AdminCourses() {
         const tree = await getCourseTree(selectedCourseId)
         setCourseTree(tree)
       }
-      setMessage({ message: 'Da xoa chuong.', tone: 'success' })
+      setMessage({ message: 'Da Xoa muc.', tone: 'success' })
     } catch (err) {
-      setMessage({ message: err instanceof Error ? err.message : 'Khong the xoa chuong.', tone: 'error' })
+      setMessage({ message: err instanceof Error ? err.message : 'Khong the Xoa muc.', tone: 'error' })
     }
   }
 
@@ -397,12 +412,12 @@ export function AdminCourses() {
         {/* Course sections & lessons */}
         {courseTree ? (
           <Card>
-            <h2 className="mb-4 text-lg font-bold text-[#172033]">Chuong va bai hoc</h2>
+            <h2 className="mb-4 text-lg font-bold text-[#172033]">Noi dung khoa hoc</h2>
 
             {/* Add section form */}
             <div className="mb-5 grid gap-3 sm:grid-cols-[1fr_auto]">
               <Input
-                placeholder="Ten chuong moi"
+                placeholder="Ten muc moi, vi du: Chuong 1, Phan co ban..."
                 value={newSectionTitle}
                 onChange={(e) => setNewSectionTitle(e.target.value)}
               />
@@ -412,13 +427,13 @@ export function AdminCourses() {
                 disabled={addingSection || !newSectionTitle.trim()}
               >
                 {addingSection ? <Loader2 size={16} className="animate-spin" /> : <Plus size={16} />}
-                Them chuong
+                Them muc
               </Button>
             </div>
 
             {/* Section list */}
             {courseTree.course_sections.length === 0 ? (
-              <p className="text-sm text-[#607589]">Chua co chuong nao. Hay them chuong moi.</p>
+              <p className="text-sm text-[#607589]">Chua co muc nao. Hay them muc moi.</p>
             ) : (
               <div className="space-y-3">
                 {courseTree.course_sections.map((section) => {
@@ -455,22 +470,22 @@ export function AdminCourses() {
                         ) : (
                           <>
                             <span className="flex-1 text-sm font-semibold text-[#172033]">
-                              <span className="text-[#607589]">Chuong {section.position}:</span> {section.title}
+                              <span className="text-[#607589]">{section.position}.</span> {section.title}
                             </span>
                             <span className="text-xs text-[#607589]">{section.lessons.length} bai</span>
                             <button
                               type="button"
                               className="shrink-0 rounded p-1 text-[#4d6378] hover:bg-[#edf4f8]"
-                              onClick={() => startEditSection(section.id, section.title)}
-                              aria-label="Sua chuong"
+                              onClick={(e) => { e.stopPropagation(); startEditSection(section.id, section.title); }}
+                              aria-label="Sua muc"
                             >
                               <Edit3 size={15} />
                             </button>
                             <button
                               type="button"
                               className="shrink-0 rounded p-1 text-[#b43232] hover:bg-[#fff1f1]"
-                              onClick={() => setConfirmDeleteSection(section.id)}
-                              aria-label="Xoa chuong"
+                              onClick={(e) => { e.stopPropagation(); setConfirmDeleteSection(section.id); }}
+                              aria-label="Xoa muc"
                             >
                               <Trash2 size={15} />
                             </button>
@@ -485,10 +500,10 @@ export function AdminCourses() {
                           {confirmDeleteSection === section.id ? (
                             <Alert tone="error">
                               <div className="flex flex-col gap-2">
-                                <p>Chuong nay co {section.lessons.length} bai hoc. Ban co chac chan muon xoa?</p>
+                                <p>Muc nay co {section.lessons.length} bai hoc. Ban chac chan muon xoa?</p>
                                 <div className="flex gap-2">
                                   <Button variant="danger"  onClick={() => void handleDeleteSection(section.id)}>
-                                    Xoa chuong
+                                    Xoa muc
                                   </Button>
                                   <Button variant="secondary"  onClick={() => setConfirmDeleteSection(null)}>
                                     Huy
@@ -534,13 +549,13 @@ export function AdminCourses() {
                                       <span className="flex-1 text-sm text-[#172033]">
                                         <span className="text-[#607589]">{lesson.position}.</span> {lesson.title}
                                         {lesson.youtube_video_id ? (
-                                          <span className="ml-2 text-xs text-[#4d6378]">· {lesson.youtube_video_id}</span>
+                                          <span className="ml-2 text-xs text-[#4d6378]">Â· {lesson.youtube_video_id}</span>
                                         ) : null}
                                       </span>
                                       <button
                                         type="button"
                                         className="shrink-0 rounded p-1 text-[#4d6378] hover:bg-[#dbe6ed]"
-                                        onClick={() => startEditLesson(lesson)}
+                                        onClick={(e) => { e.stopPropagation(); startEditLesson(lesson); }}
                                         aria-label="Sua bai hoc"
                                       >
                                         <Edit3 size={14} />
@@ -548,7 +563,7 @@ export function AdminCourses() {
                                       <button
                                         type="button"
                                         className="shrink-0 rounded p-1 text-[#b43232] hover:bg-[#fff1f1]"
-                                        onClick={() => setConfirmDeleteLesson(lesson.id)}
+                                        onClick={(e) => { e.stopPropagation(); setConfirmDeleteLesson(lesson.id); }}
                                         aria-label="Xoa bai hoc"
                                       >
                                         <Trash2 size={14} />
@@ -617,10 +632,12 @@ export function AdminCourses() {
           </Card>
         ) : mode === 'create' ? (
           <Card>
-            <p className="text-sm text-[#607589]">Dien thong tin phia tren va tao khoa hoc de bat dau them chuong va bai hoc.</p>
+            <p className="text-sm text-[#607589]">Dien thong tin phia tren va tao khoa hoc de bat dau them muc va bai hoc.</p>
           </Card>
         ) : null}
       </section>
     </div>
   )
 }
+
+
