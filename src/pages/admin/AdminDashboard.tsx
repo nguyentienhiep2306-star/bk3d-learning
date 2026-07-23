@@ -1,4 +1,4 @@
- import { BookOpen, GraduationCap, Settings, Users } from 'lucide-react'
+import { BookOpen, FolderKanban, GraduationCap, MessageSquareText, Settings, Users } from 'lucide-react'
 import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { Button, Card, PageHeader } from '../../components/ui'
@@ -23,7 +23,9 @@ export function AdminDashboard() {
         <Link to="/admin/courses"><Button className="w-full" variant="secondary">Khóa học</Button></Link>
         <Link to="/admin/users"><Button className="w-full" variant="secondary">Học viên</Button></Link>
        <Link to="/admin/enrollments"><Button className="w-full" variant="secondary">Cấp quyền</Button></Link>
-       <Link to="/admin/settings"><Button className="w-full" variant="secondary"><Settings size={16} /> Cài đặt</Button></Link>
+      <Link to="/admin/settings"><Button className="w-full" variant="secondary"><Settings size={16} /> Cài đặt</Button></Link>
+      <Link to="/admin/projects"><Button className="w-full" variant="secondary"><FolderKanban size={16} /> Dự án thực tế</Button></Link>
+      <Link to="/admin/leads"><Button className="w-full" variant="secondary"><MessageSquareText size={16} /> Đăng ký tư vấn</Button></Link>
       </div>
     </div>
   )
